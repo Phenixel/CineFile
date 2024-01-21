@@ -7,6 +7,26 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="CineFile" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Add this resource to invert a boolean value -->
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <!-- Add this resource for boolean to visibility conversion -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                    <Setter Property="Background" Value="LightBlue"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,8 +35,24 @@
 
         <!-- Barre de navigation avec menu -->
         <Border Background="LightGray" Padding="10">
-            <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="CineFile" FontSize="20"/>
+                <ItemsControl ItemsSource="{Binding Categories}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Nom}"
+                                    Command="{Binding DataContext.ToggleCategorySelectionCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}"
+                                    Margin="5"
+                                    IsEnabled="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 <Menu>
                     <MenuItem Header="_Action">
                         <MenuItem Header="_Add Film" Command="{Binding AddFilmCommand}"/>
@@ -24,24 +60,8 @@
                         <MenuItem Header="_Delete Film" Command="{Binding DeleteFilmCommand}" />
                     </MenuItem>
                 </Menu>
-
-                <!-- Afficher la liste des catégories -->
-                <ItemsControl ItemsSource="{Binding Categories}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Nom}" Margin="5"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-
             </StackPanel>
         </Border>
-
 
         <!-- Grille pour la liste des films avec défilement -->
         <ScrollViewer Grid.Row="1">

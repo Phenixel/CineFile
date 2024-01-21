@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using CineFile.Model;
 
 namespace CineFile.ViewModel
@@ -10,6 +12,7 @@ namespace CineFile.ViewModel
     public class FilmViewModel : ObservableObject
     {
         private DatabaseService _databaseService;
+        private ObservableCollection<Film> _allFilms;
 
         private ObservableCollection<Film> _films;
         public ObservableCollection<Film> Films
@@ -25,10 +28,30 @@ namespace CineFile.ViewModel
             set { SetProperty(ref _categories, value, nameof(Categories)); }
         }
 
+        private Categorie _selectedCategory;
+        public Categorie SelectedCategory
+        {
+            get { return _selectedCategory; }
+            set
+            {
+                SetProperty(ref _selectedCategory, value, nameof(SelectedCategory));
+                ToggleCategorySelection(SelectedCategory);
+            }
+        }
+
+        private RelayCommand<Categorie> _toggleCategorySelectionCommand;
+        public RelayCommand<Categorie> ToggleCategorySelectionCommand
+        {
+            get
+            {
+                return _toggleCategorySelectionCommand ?? (_toggleCategorySelectionCommand = new RelayCommand<Categorie>(ToggleCategorySelection));
+            }
+        }
+
         public FilmViewModel()
         {
             _databaseService = new DatabaseService();
-            LoadData(); // Appel à une méthode pour charger les données depuis la base de données
+            LoadData();
         }
 
         public void LoadData()
@@ -65,8 +88,11 @@ namespace CineFile.ViewModel
                     // Assigner la liste de films à la propriété Films
                     Films = new ObservableCollection<Film>(films);
 
+                    // Assigner la liste complète des films à la propriété _allFilms
+                    _allFilms = Films;
+
                     // Afficher un message de réussite
-                    MessageBox.Show("Données chargées avec succès depuis la base de données.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Console.WriteLine("Données chargées avec succès depuis la base de données.");
                 }
                 else
                 {
@@ -103,10 +129,32 @@ namespace CineFile.ViewModel
             {
                 // Gérer les erreurs de connexion à la base de données
                 MessageBox.Show($"Erreur de connexion à la base de données : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                // Ajouter des logs supplémentaires ici, par exemple :
                 Console.WriteLine($"Error in LoadData: {ex}");
             }
         }
+
+        private void ToggleCategorySelection(Categorie clickedCategory)
+        {
+            // Inverser la sélection de la catégorie cliquée
+            clickedCategory.IsSelected = !clickedCategory.IsSelected;
+
+            // Filtrer la liste des films en fonction des catégories sélectionnées
+            var selectedCategories = Categories.Where(c => c.IsSelected).ToList();
+
+            if (selectedCategories.Count > 0)
+            {
+                var filteredFilms = _allFilms.Where(film => selectedCategories.Any(category => film.CategorieId == category.CategorieId)).ToList();
+                Films = new ObservableCollection<Film>(filteredFilms);
+            }
+            else
+            {
+                // Si aucune catégorie n'est sélectionnée, réinitialiser la liste complète des films
+                Films = _allFilms;
+            }
+
+            // Rafraîchir l'affichage
+            RaisePropertyChanged(nameof(Films));
+        }
+
     }
 }
-
