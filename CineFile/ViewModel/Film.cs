@@ -2,6 +2,7 @@ namespace CineFile.ViewModel;
 
 public class Film
 {
+    public string FilmId { get; set; }
     public string Titre { get; set; }
     public string Realisateur { get; set; }
     public int AnneeSortie { get; set; }

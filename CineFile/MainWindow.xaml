@@ -6,29 +6,64 @@
         xmlns:local="clr-namespace:CineFile"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="CineFile" Height="450" Width="800">
     <Grid>
-        <Menu>
-            <MenuItem Header="_File">
-                <MenuItem Header="_Add Film" Command="{Binding AddFilmCommand}"/>
-                <MenuItem Header="_Edit Film" Command="{Binding EditFilmCommand}" />
-                <MenuItem Header="_Delete Film" Command="{Binding DeleteFilmCommand}" />
-            </MenuItem>
-        </Menu>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <ListBox ItemsSource="{Binding Films}" SelectedItem="{Binding SelectedFilm}" HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <StackPanel>
-                            <Image Source="{Binding LienImage}" Width="150" Height="225" Stretch="UniformToFill"/>
-                            <TextBlock Text="{Binding Titre}" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,5,0,0"/>
-                            <TextBlock Text="{Binding Realisateur}" HorizontalAlignment="Center" FontSize="14" Margin="0,5,0,0"/>
-                            <TextBlock Text="{Binding AnneeSortie}" HorizontalAlignment="Center" FontSize="14" Margin="0,5,0,0"/>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <!-- Barre de navigation avec menu -->
+        <Border Background="LightGray" Padding="10">
+            <StackPanel>
+                <TextBlock Text="CineFile" FontSize="20"/>
+                <Menu>
+                    <MenuItem Header="_Action">
+                        <MenuItem Header="_Add Film" Command="{Binding AddFilmCommand}"/>
+                        <MenuItem Header="_Edit Film" Command="{Binding EditFilmCommand}" />
+                        <MenuItem Header="_Delete Film" Command="{Binding DeleteFilmCommand}" />
+                    </MenuItem>
+                </Menu>
+
+                <!-- Afficher la liste des catégories -->
+                <ItemsControl ItemsSource="{Binding Categories}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Nom}" Margin="5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+
+            </StackPanel>
+        </Border>
+
+
+        <!-- Grille pour la liste des films avec défilement -->
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Films}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="5" Width="200">
+                            <StackPanel>
+                                <Image Source="{Binding LienImage}" Width="200" Height="300" Stretch="UniformToFill"/>
+                                <TextBlock Text="{Binding Titre}" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Realisateur}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding AnneeSortie}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>
