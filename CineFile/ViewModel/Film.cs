@@ -1,8 +1,10 @@
-namespace CineFile
+namespace CineFile.ViewModel;
+
+public class Film
 {
-    public class Film
-    {
-        public string Title { get; set; }
-        public string ImageUrl { get; set; }
-    }
+    public string Titre { get; set; }
+    public string Realisateur { get; set; }
+    public int AnneeSortie { get; set; }
+    public int CategorieId { get; set; }
+    public string LienImage { get; set; }
 }

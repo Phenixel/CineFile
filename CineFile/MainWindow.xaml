@@ -5,25 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CineFile"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ItemsControl ItemsSource="{Binding Films}">
-            <ItemsControl.ItemTemplate>
+        <Menu>
+            <MenuItem Header="_File">
+                <MenuItem Header="_Add Film" Command="{Binding AddFilmCommand}"/>
+                <MenuItem Header="_Edit Film" Command="{Binding EditFilmCommand}" />
+                <MenuItem Header="_Delete Film" Command="{Binding DeleteFilmCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <ListBox ItemsSource="{Binding Films}" SelectedItem="{Binding SelectedFilm}" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1" Margin="5">
                         <StackPanel>
-                            <Image Source="{Binding ImageUrl}" Width="100" Height="150" Stretch="UniformToFill"/>
-                            <TextBlock Text="{Binding Title}" HorizontalAlignment="Center"/>
+                            <Image Source="{Binding LienImage}" Width="150" Height="225" Stretch="UniformToFill"/>
+                            <TextBlock Text="{Binding Titre}" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,5,0,0"/>
+                            <TextBlock Text="{Binding Realisateur}" HorizontalAlignment="Center" FontSize="14" Margin="0,5,0,0"/>
+                            <TextBlock Text="{Binding AnneeSortie}" HorizontalAlignment="Center" FontSize="14" Margin="0,5,0,0"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
-
 </Window>

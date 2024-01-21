@@ -12,21 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CineFile.ViewModel;
+
+using System.Windows;
 
 namespace CineFile
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public MainViewModel ViewModel { get; set; }
+        private FilmViewModel _filmViewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = new MainViewModel();
-            DataContext = ViewModel;
+
+            _filmViewModel = new FilmViewModel();
+            DataContext = _filmViewModel; // Définir le contexte de données pour le DataContext
         }
     }
 }
