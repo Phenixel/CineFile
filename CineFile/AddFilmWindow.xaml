@@ -1,0 +1,43 @@
+<Window x:Class="CineFile.AddFilmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CineFile"
+        mc:Ignorable="d"
+        Title="Ajouter un film" Height="350" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Titre" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Text="{Binding Titre, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="2" Content="Réalisateur" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Text="{Binding Realisateur, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="4" Content="Année de sortie" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="5" Text="{Binding AnneeSortie, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="6" Content="Catégorie" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="7" ItemsSource="{Binding Categories}" DisplayMemberPath="Nom" SelectedValue="{Binding SelectedCategorieId, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="8" Content="Lien de l'image" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="9" Text="{Binding LienImage, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+        <Button Grid.Row="10" Content="Ajouter" Command="{Binding AddFilmCommand}" VerticalAlignment="Center"/>
+    </Grid>
+</Window>

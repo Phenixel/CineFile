@@ -35,3 +35,5 @@ C:\Users\pheni\RiderProjects\CineFile\CineFile\bin\Debug\net7.0-windows\runtimes
 C:\Users\pheni\RiderProjects\CineFile\CineFile\bin\Debug\net7.0-windows\runtimes\win-x64\native\krbcc64.dll
 C:\Users\pheni\RiderProjects\CineFile\CineFile\obj\Debug\net7.0-windows\CineFile.csproj.CopyComplete
 C:\Users\pheni\RiderProjects\CineFile\CineFile\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\pheni\RiderProjects\CineFile\CineFile\obj\Debug\net7.0-windows\AddFilmWindow.g.cs
+C:\Users\pheni\RiderProjects\CineFile\CineFile\obj\Debug\net7.0-windows\AddFilmWindow.baml

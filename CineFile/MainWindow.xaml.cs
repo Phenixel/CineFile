@@ -29,5 +29,12 @@ namespace CineFile
             _filmViewModel = new FilmViewModel();
             DataContext = _filmViewModel; // Définir le contexte de données pour le DataContext
         }
+
+        private void AddFilmMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Créez une instance de AddFilmWindow et affichez-la
+            var addFilmWindow = new AddFilmWindow();
+            addFilmWindow.ShowDialog();
+        }
     }
 }

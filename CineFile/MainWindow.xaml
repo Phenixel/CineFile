@@ -55,7 +55,7 @@
                 </ItemsControl>
                 <Menu>
                     <MenuItem Header="_Action">
-                        <MenuItem Header="_Add Film" Command="{Binding AddFilmCommand}"/>
+                        <MenuItem Header="_Add Film" Click="AddFilmMenuItem_Click"/>
                         <MenuItem Header="_Edit Film" Command="{Binding EditFilmCommand}" />
                         <MenuItem Header="_Delete Film" Command="{Binding DeleteFilmCommand}" />
                     </MenuItem>
